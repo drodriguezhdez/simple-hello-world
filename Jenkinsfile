@@ -14,14 +14,6 @@ pipeline {
                      }
                 }
             }
-
-            steps {
-                echo 'Building..'
-                echo 'Building..'
-                echo 'Building..'
-                echo 'Building..'
-                echo 'Building..'
-            }
         }
         stage('Test Stage') {
             steps {
