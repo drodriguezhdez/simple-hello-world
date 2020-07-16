@@ -10,6 +10,17 @@ pipeline {
                 echo 'Building..'
                 echo 'Building..'
             }
+            stages {
+                stage('Inner Build Stage') {
+                     steps {
+                        echo 'Building..'
+                        echo 'Building..'
+                        echo 'Building..'
+                        echo 'Building..'
+                        echo 'Building..'
+                     }
+                }
+            }
         }
         stage('Test Stage') {
             steps {
