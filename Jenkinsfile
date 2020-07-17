@@ -5,12 +5,10 @@ pipeline {
         stage('Build Stage') {
             stages {
                 stage('Inner Build Stage') {
-                     steps {
-                        echo 'Building..'
-                        echo 'Building..'
-                        echo 'Building..'
-                        echo 'Building..'
-                        echo 'Building..'
+                     stages {
+                        stage('Inner Inner Build Stage') {
+                            echo 'Building.... '
+                        }
                      }
                 }
             }
