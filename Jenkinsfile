@@ -1,43 +1,28 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven 3.3.9'
+        jdk 'jdk8'
+    }
     stages {
-        stage('Build Stage') {
-            stages {
-                stage('Inner Build Stage') {
-                    stages {
-                        stage('Inner Inner Build Stage') {
-                            steps {
-                                echo 'Building.... '
-                            }
-                        }
-                     }
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+
+        stage ('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/**/*.xml'
                 }
             }
-        }
-        stage('Test Stage') {
-            steps {
-                echo 'Testing..'
-                echo 'Testing..'
-                echo 'Testing..'
-                echo 'Testing..'
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy Stage') {
-            steps {
-                echo 'Deploying....'
-                echo 'Deploying....'
-                echo 'Deploying....'
-                echo 'Deploying....'
-                echo 'Deploying....'
-            }
-        }
-    }
-
-    post {
-        always {
-            echo 'I will always say Hello again!'
         }
     }
 }
