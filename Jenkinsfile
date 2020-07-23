@@ -10,6 +10,19 @@ pipeline {
             }
         }
 
+        stage('EnvVars'){
+            steps {
+               script {
+                   def fields = env.getEnvironment()
+                   fields.each {
+                        key, value -> println("${key} = ${value}");
+                    }
+
+                    println(env.PATH)
+               }
+            }
+        }
+
         stage ('Build') {
             steps {
                 sh './mvnw clean package'
