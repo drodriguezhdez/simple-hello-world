@@ -10,6 +10,12 @@ pipeline {
             }
         }
 
+        stage('EnvVars command') {
+            steps {
+                sh('printenv | sort')
+            }
+        }
+
         stage('EnvVars'){
             steps {
                script {
