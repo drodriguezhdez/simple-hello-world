@@ -10,7 +10,7 @@ pipeline {
             }
         }
 
-        stage('EnvVars command') {
+        /* stage('EnvVars command') {
             steps {
                 sh('printenv | sort')
             }
@@ -28,7 +28,7 @@ pipeline {
                }
             }
         }
-
+ */
         stage ('Build') {
             steps {
                 sh './mvnw clean package'
