@@ -3,25 +3,28 @@ pipeline {
     stages {
         stage ('Initialize') {
             stages {
-                stage('Initialize inner 1') {
-                    steps {
-                        sh '''
-                            echo "PATH = ${PATH}"
-                            echo "M2_HOME = ${M2_HOME}"
-                        '''
+                parallel {
+                    stage('Initialize inner 1') {
+                        steps {
+                            sh '''
+                                echo "PATH = ${PATH}"
+                                echo "M2_HOME = ${M2_HOME}"
+                            '''
+                        }
+
                     }
 
-                }
+                    stage('Initialize inner 2') {
+                        steps {
+                            sh '''
+                                echo "PATH = ${PATH}"
+                                echo "M2_HOME = ${M2_HOME}"
+                            '''
+                        }
 
-                stage('Initialize inner 2') {
-                    steps {
-                        sh '''
-                            echo "PATH = ${PATH}"
-                            echo "M2_HOME = ${M2_HOME}"
-                        '''
                     }
-
                 }
+
             }
 
 
