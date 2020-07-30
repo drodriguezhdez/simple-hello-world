@@ -15,25 +15,19 @@ pipeline {
             }
             parallel {
                 stage('Branch A') {
-                    agent {
-                        label "for-branch-a"
-                    }
+                    agent any
                     steps {
                         echo "On Branch A"
                     }
                 }
                 stage('Branch B') {
-                    agent {
-                        label "for-branch-b"
-                    }
+                    agent any
                     steps {
                         echo "On Branch B"
                     }
                 }
                 stage('Branch C') {
-                    agent {
-                        label "for-branch-c"
-                    }
+                    agent any
                     stages {
                         stage('Nested 1') {
                             steps {
