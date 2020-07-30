@@ -1,13 +1,7 @@
-matrix {
-    axes {
-        axis {
-            name 'PLATFORM'
-            values 'linux', 'mac', 'windows'
-        }
-        axis {
-            name 'BROWSER'
-            values 'chrome', 'edge', 'firefox', 'safari'
-        }
+pipeline {
+    agent any
+    options {
+        parallelsAlwaysFailFast()
     }
     stages {
         stage('Non-Parallel Stage') {
