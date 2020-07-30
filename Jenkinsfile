@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    options {
-        parallelsAlwaysFailFast()
-    }
-
     stages {
         stage('BuildAndTest') {
             matrix {
@@ -27,7 +23,7 @@ pipeline {
                                 when {
                                     branch 'master'
                                 }
-                                parallel {
+                                stages {
                                     stage('Branch A') {
                                         agent any
                                         steps {
