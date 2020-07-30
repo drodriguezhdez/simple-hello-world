@@ -1,37 +1,51 @@
 pipeline {
     agent any
+    options {
+        parallelsAlwaysFailFast()
+    }
     stages {
-        stage ('Initialize') {
+        stage('Non-Parallel Stage') {
+            steps {
+                echo 'This stage will be executed first.'
+            }
+        }
+        stage('Parallel Stage') {
+            when {
+                branch 'master'
+            }
             parallel {
-                    stage('Initialize inner 1') {
-                        steps {
-                            sh '''
-                                echo "PATH = ${PATH}"
-                                echo "M2_HOME = ${M2_HOME}"
-                            '''
-                        }
-
+                stage('Branch A') {
+                    agent {
+                        label "for-branch-a"
                     }
-
-                    stage('Initialize inner 2') {
-                        steps {
-                            sh '''
-                                echo "PATH = ${PATH}"
-                                echo "M2_HOME = ${M2_HOME}"
-                            '''
-                        }
-
+                    steps {
+                        echo "On Branch A"
                     }
                 }
-
-        }
-        stage ('Build') {
-            steps {
-                sh './mvnw clean package'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/**/*.xml'
+                stage('Branch B') {
+                    agent {
+                        label "for-branch-b"
+                    }
+                    steps {
+                        echo "On Branch B"
+                    }
+                }
+                stage('Branch C') {
+                    agent {
+                        label "for-branch-c"
+                    }
+                    stages {
+                        stage('Nested 1') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('Nested 2') {
+                            steps {
+                                echo "In stage Nested 2 within Branch C"
+                            }
+                        }
+                    }
                 }
             }
         }
