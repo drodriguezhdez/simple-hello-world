@@ -2,8 +2,7 @@ pipeline {
     agent any
     stages {
         stage ('Initialize') {
-            stages {
-                parallel {
+            parallel {
                     stage('Initialize inner 1') {
                         steps {
                             sh '''
@@ -24,9 +23,6 @@ pipeline {
 
                     }
                 }
-
-            }
-
 
         }
         stage ('Build') {
