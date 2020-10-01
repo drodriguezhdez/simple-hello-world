@@ -13,3 +13,5 @@ steps:
 - script: echo Hello, world!
   
 - script: printenv
+
+- script: echo Hello, world2!
