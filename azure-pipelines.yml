@@ -22,7 +22,7 @@ resources:
         - 8125:8125
         - 8126:8126
       env:
-        DD_API_KEY: $(DDAPIKEY)
+        DD_API_KEY: $DDAPIKEY
         DD_APM_ENABLED: "true"
         DD_APM_NON_LOCAL_TRAFFIC: "true"
         DD_LOGS_ENABLED: "true"
@@ -42,7 +42,7 @@ jobs:
     services:
       datadog-agent: datadog-agent
     steps:
-      - script: ./mvnw clean verify -Dworkspace=$(BUILD_SOURCESDIRECTORY)
+      - script: ./mvnw clean verify -Dworkspace=$BUILD_SOURCESDIRECTORY
         displayName: Run tests
         env:
           CI: "true"
