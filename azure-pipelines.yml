@@ -3,7 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-name: IntegrationTests
+#name: IntegrationTests
 trigger:
   batch: false
   branches:
