@@ -42,6 +42,7 @@ jobs:
     services:
       datadog-agent: datadog-agent
     steps:
+      - script: printenv
       - script: mvn clean verify -Dworkspace=$BUILD_SOURCESDIRECTORY
         displayName: Run tests
         env:
