@@ -49,4 +49,4 @@ jobs:
           CI: "true"
           DD_AGENT_HOST: datadog-agent
           DD_ENV: drodriguezhdez
-          DD_INTEGRATION_JUNIT_ENABLED: true
+          DD_INTEGRATION_JUNIT_ENABLED: "true"
