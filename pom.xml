@@ -52,7 +52,7 @@
             <argLine>-javaagent:/var/lib/jenkins/workspace/mple-hello-world-pipeline_master/.datadog/dd-java-agent-0.58.0-SNAPSHOT.jar</argLine>
           </configuration>-->
           <configuration>
-            <argLine>-javaagent:${workspace}/.datadog/dd-trace-java-0.65.0-SNAPSHOT.jar</argLine>
+            <argLine>-javaagent:${workspace}/.datadog/dd-java-agent-0.65.0-SNAPSHOT.jar</argLine>
           </configuration>
         </plugin>
         <plugin>
