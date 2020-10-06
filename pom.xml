@@ -16,6 +16,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <workspace/>
   </properties>
 
   <dependencies>
@@ -50,6 +51,9 @@
 <!--          <configuration>
             <argLine>-javaagent:/var/lib/jenkins/workspace/mple-hello-world-pipeline_master/.datadog/dd-java-agent-0.58.0-SNAPSHOT.jar</argLine>
           </configuration>-->
+          <configuration>
+            <argLine>-javaagent:${workspace}/.datadog/dd-trace-java-0.65.0-SNAPSHOT.jar</argLine>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>

@@ -3,13 +3,49 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+name: IntegrationTests
 trigger:
-- master
+  batch: false
+  branches:
+    include:
+      - master
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  
-- script: printenv
+resources:
+  containers:
+    - container: datadog-agent
+      image: datadog/agent:7-jmx
+      options: --health-cmd="exit 0" --health-interval=1s
+      ports:
+        - 8125:8125
+        - 8126:8126
+      env:
+        DD_API_KEY: $(DDAPIKEY)
+        DD_APM_ENABLED: "true"
+        DD_APM_NON_LOCAL_TRAFFIC: "true"
+        DD_LOGS_ENABLED: "true"
+        DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
+        DD_AC_EXCLUDE: "name:datadog-agent"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - /proc/:/host/proc/:ro
+        - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+
+jobs:
+  - job: IntegrationTests
+    pool:
+      vmImage: "Ubuntu-16.04"
+    container:
+      image: maven:3-openjdk-8
+    services:
+      datadog-agent: datadog-agent
+    steps:
+      - script: ./mvnw clean verify -Dworkspace=$(BUILD_SOURCESDIRECTORY)
+        displayName: Run tests
+        env:
+          CI: "true"
+          DD_AGENT_HOST: datadog-agent
+          DD_ENV: drodriguezhdez
+          DD_INTEGRATION_JUNIT_ENABLED: true
