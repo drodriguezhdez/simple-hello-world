@@ -1,43 +1,38 @@
 pipeline {
-    agent {
-        label('worker')
-    }
+    agent none
     stages {
-        stage ('Initialize') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-            }
-        }
-
-        /* stage('EnvVars command') {
+        stage('Initialize') {
             steps {
                 sh('printenv | sort')
             }
         }
-        stage('EnvVars'){
-            steps {
-               script {
-                   def fields = env.getEnvironment()
-                   fields.each {
-                        key, value -> println("${key} = ${value}");
-                    }
-                    println(env.PATH)
-               }
+        stage('Test Stage 1') {
+            agent {
+                label('worker')
             }
-        }
- */
-        stage ('Build') {
+
             steps {
                 sh './mvnw clean package'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/**/*.xml'
-                }
+        }
+        stage('Test Stage 2') {
+            agent {
+                label('worker')
+            }
+
+            steps {
+                sh './mvnw clean package'
             }
         }
+        stage('Test Stage 3'){
+            agent {
+                label('worker')
+            }
+
+            steps {
+                sh './mvnw clean package'
+            }
+        }
+
     }
 }
