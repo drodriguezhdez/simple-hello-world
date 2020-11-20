@@ -2,6 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Initialize') {
+            agent any
             steps {
                 sh('printenv | sort')
             }
@@ -33,6 +34,5 @@ pipeline {
                 sh './mvnw clean package'
             }
         }
-
     }
 }
