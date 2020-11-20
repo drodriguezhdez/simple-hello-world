@@ -7,31 +7,35 @@ pipeline {
                 sh('printenv | sort')
             }
         }
-        stage('Test Stage 1') {
-            agent {
-                label('worker')
-            }
+        stage('Run tests') {
+            parallel {
+                stage('Test Stage 1') {
+                            agent {
+                                label('worker')
+                            }
 
-            steps {
-                sh './mvnw clean package'
-            }
-        }
-        stage('Test Stage 2') {
-            agent {
-                label('worker')
-            }
+                            steps {
+                                sh './mvnw clean package'
+                            }
+                        }
+                        stage('Test Stage 2') {
+                            agent {
+                                label('worker')
+                            }
 
-            steps {
-                sh './mvnw clean package'
-            }
-        }
-        stage('Test Stage 3'){
-            agent {
-                label('worker')
-            }
+                            steps {
+                                sh './mvnw clean package'
+                            }
+                        }
+                        stage('Test Stage 3'){
+                            agent {
+                                label('worker')
+                            }
 
-            steps {
-                sh './mvnw clean package'
+                            steps {
+                                sh './mvnw clean package'
+                            }
+                        }
             }
         }
     }
