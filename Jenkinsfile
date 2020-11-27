@@ -1,41 +1,42 @@
 pipeline {
-    agent none
+    agent {
+        label('worker')
+    }
     stages {
-        stage('Initialize') {
-            agent any
+        stage ('Initialize') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+
+        /* stage('EnvVars command') {
             steps {
                 sh('printenv | sort')
             }
         }
-        stage('Run tests') {
-            parallel {
-                stage('Test Stage 1') {
-                            agent {
-                                label('worker')
-                            }
-
-                            steps {
-                                sh './mvnw clean package'
-                            }
-                        }
-                        stage('Test Stage 2') {
-                            agent {
-                                label('worker')
-                            }
-
-                            steps {
-                                sh './mvnw clean package'
-                            }
-                        }
-                        stage('Test Stage 3'){
-                            agent {
-                                label('worker')
-                            }
-
-                            steps {
-                                sh './mvnw clean package'
-                            }
-                        }
+        stage('EnvVars'){
+            steps {
+               script {
+                   def fields = env.getEnvironment()
+                   fields.each {
+                        key, value -> println("${key} = ${value}");
+                    }
+                    println(env.PATH)
+               }
+            }
+        }
+ */
+        stage ('Build') {
+            steps {
+                sh './mvnw clean package'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/**/*.xml'
+                }
             }
         }
     }
